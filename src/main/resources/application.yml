@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+spring:
+  freemarker:
+    # 默认模板存放路径
+    template-loader-path: classpath:/templates
+    # 是否开启缓存，默认 true
+    cache: false
+    charset: UTF-8
+    content-type: text/html
+    # 模板后缀
+    suffix: .ftl
+    # 设定所有request的属性在merge到模板的时候，是否要都添加到model中
+    expose-request-attributes: false
+    # 设定所有HttpSession的属性在merge到模板的时候，是否要都添加到model中.
+    expose-session-attributes: false
+    # RequestContext属性的名称
+    request-context-attribute: request
+
+
+test:
+  key: 134

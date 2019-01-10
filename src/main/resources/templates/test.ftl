@@ -1,0 +1,13 @@
+<html>[BR]
+<head>[BR]
+    <title>Welcome!</title>[BR]
+</head>[BR]
+<body>[BR]
+<#-- Greet the user with his/her name -->[BR]
+<h1>Welcome ${user}</h1>[BR]
+<h1>Welcome ${latestProduct}</h1>[BR]
+<h1>Welcome ${url}</h1>[BR]
+<h1>Welcome ${name}</h1>[BR]
+<p>We have these animals:[BR]
+</body>[BR]
+</html>
