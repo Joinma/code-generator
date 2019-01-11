@@ -16,7 +16,9 @@ public interface ${entityName}Service {
 
     String save${entityName}(${entityName} ${entityNameLowerCase});
 
-    ${entityName} select${entityName}(Long id);
+    String delete${entityName}(String id);
+
+    ${entityName} select${entityName}(String id);
 
     PageInfo select${entityNamePlural}ByExample(${entityName} ${entityNameLowerCase}, Integer pageNum, Integer pageSize);
 

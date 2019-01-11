@@ -23,6 +23,7 @@ public class GeneratorUtil {
         try {
             generateService();
             generateServiceImpl();
+            generateController();
         } catch (IOException | TemplateException e) {
             e.printStackTrace();
         }
@@ -78,7 +79,7 @@ public class GeneratorUtil {
      */
     private static void generateController() throws IOException, TemplateException {
         String fileName = BaseInfoUtil.ENTITY_NAME.trim() + "Controller.java";
-        createTemplateFile(fileName, BaseInfoUtil.SERVICE_IMPL_TEMP_PATH_NAME);
+        createTemplateFile(fileName, BaseInfoUtil.CONTROLLER_TEMP_PATH_NAME);
         System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^" + fileName + " 文件创建成功 !");
     }
 
@@ -106,11 +107,16 @@ public class GeneratorUtil {
      * @return 数据模型
      */
     private static Map<String, Object> getDataMap() {
-        Map<String, Object> dataMap = new HashMap<>(10);
+        Map<String, Object> dataMap = new HashMap<>(20);
         dataMap.put("entityNameLowerCase", BaseInfoUtil.ENTITY_NAME.trim().toLowerCase());
+        dataMap.put("entityNameLowerCasePlural", SingularPluralConversionUtil.changeSinglarToPlural(BaseInfoUtil.ENTITY_NAME.trim().toLowerCase()));
         dataMap.put("entityName", BaseInfoUtil.ENTITY_NAME.trim());
         String entityNamePlural = SingularPluralConversionUtil.changeSinglarToPlural(BaseInfoUtil.ENTITY_NAME.trim());
         dataMap.put("entityNamePlural", entityNamePlural);
+        String entityNameCamelCase = CamelCaseUtil.changeUnderlineToCamelCase(BaseInfoUtil.ENTITY_NAME.trim());
+        dataMap.put("entityNameCamelCase", entityNameCamelCase);
+        String entityNameCamelCasePlural = SingularPluralConversionUtil.changeSinglarToPlural(entityNameCamelCase);
+        dataMap.put("entityNameCamelCasePlural", entityNameCamelCasePlural);
         dataMap.put("author", BaseInfoUtil.AUTHOR);
         dataMap.put("vsrsion", BaseInfoUtil.VERSION);
         dataMap.put("description", BaseInfoUtil.DESCRIPTION);

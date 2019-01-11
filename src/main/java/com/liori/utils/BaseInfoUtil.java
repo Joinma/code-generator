@@ -10,6 +10,8 @@ public class BaseInfoUtil {
 
     public static String SERVICE_IMPL_TEMP_PATH_NAME = "ServiceImplTemplate.ftl";
 
+    public static String CONTROLLER_TEMP_PATH_NAME = "ControllerTemplate.ftl";
+
     public static String AUTHOR;
 
     public static String VERSION;

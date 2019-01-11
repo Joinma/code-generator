@@ -3,71 +3,72 @@ package com.liori.service.user.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.liori.common.constants.Constants;
-import com.liori.common.utils.wechat.WechatUtil;
-import com.liori.mapper.user.UserMapper;
-import com.liori.model.user.User;
-import com.liori.model.user.UserExample;
-import com.liori.service.user.UserService;
+import com.liori.common.exceptions.CustomizeServiceException;
+import com.liori.common.utils.uuid.UUIDUtil;
+import com.liori.mapper.${entityNameLowerCase}.${entityName}Mapper;
+import com.liori.model.${entityNameLowerCase}.${entityName};
+import com.liori.model.${entityNameLowerCase}.${entityName}Example;
+import com.liori.service.${entityNameLowerCase}.${entityName}Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
 
+/**
+ * <p>${description}的接口实现类</p>
+ * <b>created on ${createTime}</b>
+ *
+ * @author liori
+ * @since 0.1
+ */
 @Service
-public class UserServiceImpl implements UserService {
+public class ${entityName}ServiceImpl implements ${entityName}Service {
 
     @Autowired
-    private UserMapper userMapper;
+    private ${entityName}Mapper ${entityNameCamelCase}Mapper;
 
     @Override
-    public User login(String code) {
-        String openId = WechatUtil.getOpenId(code);
-        User user = userMapper.findUserByOpenId(openId);
-        if (ObjectUtils.isEmpty(user)) {
-            user = new User();
-            user.setOpenId(openId);
-            addUser(user);
-
-            // TODO: 2019/1/8 绑定默认消费分类
-            // TODO: 2019/1/8 绑定默认账户
-        } else {
-            // no need to do anything...
-        }
-        return user;
-    }
-
-    @Override
-    public int addUser(User user) {
+    public String save${entityName}(${entityName} ${entityNameCamelCase}) {
+        String id = UUIDUtil.getUUID();
+        ${entityNameCamelCase}.setId(id);
         Long currentTimeMillis = System.currentTimeMillis();
-        user.setCreateTime(currentTimeMillis);
-        user.setUpdateTime(currentTimeMillis);
-        user.setEnabled(Constants.ENABLED);
-        return userMapper.insertSelective(user);
+        ${entityNameCamelCase}.setCreateTime(currentTimeMillis);
+        ${entityNameCamelCase}.setUpdateTime(currentTimeMillis);
+        ${entityNameCamelCase}.setEnabled(Constants.ENABLED);
+        ${entityNameCamelCase}Mapper.insertSelective(${entityNameCamelCase});
+        return id;
     }
 
     @Override
-    public User getUser(Long id) {
-        return userMapper.selectByPrimaryKey(id);
+    public String delete${entityName}(String id) {
+        ${entityNameCamelCase}Mapper.deleteByPrimaryKey(id);
+        return id;
     }
 
     @Override
-    public Integer updateUser(User user) {
-        user.setUpdateTime(System.currentTimeMillis());
-        return userMapper.updateByPrimaryKey(user);
+    public ${entityName} select${entityName}(String id) {
+        return ${entityNameCamelCase}Mapper.selectByPrimaryKey(id);
     }
 
     @Override
-    public PageInfo getUsersByExample(User user, Integer pageNum, Integer pageSize) {
+    public String update${entityName}(${entityName} ${entityNameCamelCase}) {
+        String id = ${entityNameCamelCase}.getId();
+        if (StringUtils.isEmpty(id)) {
+            throw new CustomizeServiceException("更新方法必须传入id");
+        }
+        ${entityNameCamelCase}.setUpdateTime(System.currentTimeMillis());
+        ${entityNameCamelCase}Mapper.updateByPrimaryKey(${entityNameCamelCase});
+        return id;
+    }
+
+    @Override
+    public PageInfo<${entityName}> select${entityNamePlural}ByExample(${entityName} ${entityNameCamelCase}, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
 
-        UserExample userExample = new UserExample();
-        UserExample.Criteria criteria = userExample.createCriteria();
-        if (!ObjectUtils.isEmpty(user.getNickName())) {
-            criteria.andNickNameEqualTo(user.getNickName());
-        }
-        List<User> users = userMapper.selectByExample(userExample);
-        return new PageInfo(users);
+        ${entityName}Example ${entityNameCamelCase}Example = new ${entityName}Example();
+        List<${entityName}> ${entityNameCamelCasePlural} = ${entityNameCamelCase}Mapper.selectByExample(${entityNameCamelCase}Example);
+        return new PageInfo<>(${entityNameCamelCasePlural});
     }
 }
