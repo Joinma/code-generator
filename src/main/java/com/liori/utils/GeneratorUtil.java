@@ -52,58 +52,73 @@ public class GeneratorUtil {
 
     /**
      * 创建 Service 文件
+     *
      * @throws IOException
      * @throws TemplateException
      */
     private static void generateService() throws IOException, TemplateException {
         String fileName = BaseInfoUtil.ENTITY_NAME.trim() + "Service.java";
-        createTemplateFile(fileName, BaseInfoUtil.SERVICE_TEMP_PATH_NAME);
+        String path = BaseInfoUtil.PATH + "\\service\\" + BaseInfoUtil.ENTITY_NAME.trim();
+        System.out.println("service path: " + path);
+        createTemplateFile(fileName, path, BaseInfoUtil.SERVICE_TEMP_PATH_NAME);
         System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^" + fileName + " 文件创建成功 !");
     }
 
     /**
      * 创建 ServiceImple 文件
+     *
      * @throws IOException
      * @throws TemplateException
      */
     private static void generateServiceImpl() throws IOException, TemplateException {
         String fileName = BaseInfoUtil.ENTITY_NAME.trim() + "ServiceImpl.java";
-        createTemplateFile(fileName, BaseInfoUtil.SERVICE_IMPL_TEMP_PATH_NAME);
+        String path = BaseInfoUtil.PATH + "\\" + "service\\impl";
+        createTemplateFile(fileName, path, BaseInfoUtil.SERVICE_IMPL_TEMP_PATH_NAME);
         System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^" + fileName + " 文件创建成功 !");
     }
 
     /**
      * 创建 Controller 文件
+     *
      * @throws IOException
      * @throws TemplateException
      */
     private static void generateController() throws IOException, TemplateException {
         String fileName = BaseInfoUtil.ENTITY_NAME.trim() + "Controller.java";
-        createTemplateFile(fileName, BaseInfoUtil.CONTROLLER_TEMP_PATH_NAME);
+        String path = BaseInfoUtil.PATH + "\\" + "controller\\" + BaseInfoUtil.ENTITY_NAME.trim();
+        System.out.println("controller path: " + path);
+        createTemplateFile(fileName, path, BaseInfoUtil.CONTROLLER_TEMP_PATH_NAME);
         System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^" + fileName + " 文件创建成功 !");
     }
 
     /**
      * 生成模板文件
+     *
      * @throws IOException
      * @throws TemplateException
      */
-    private static void createTemplateFile(String fileName, String serviceImplTempPathName) throws TemplateException, IOException {
-        File file = new File(BaseInfoUtil.PATH);
+    private static void createTemplateFile(String fileName, String path, String serviceImplTempPathName) throws TemplateException, IOException {
+        File file = new File(path);
         if (!file.exists()) {
             System.out.println("文件不存在，创建");
-            file.mkdir();
+            boolean mkdir = file.mkdirs();
+            if (mkdir) {
+                System.out.println("创建成功");
+            } else {
+                System.out.println("创建失败");
+            }
         }
 
         Map<String, Object> dataMap = getDataMap();
         Template temp = getTemplate(serviceImplTempPathName);
-        File docFile = new File(BaseInfoUtil.PATH + "/" + fileName);
+        File docFile = new File(path + "\\" + fileName);
         Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(docFile)));
         temp.process(dataMap, out);
     }
 
     /**
      * 获取数据模型
+     *
      * @return 数据模型
      */
     private static Map<String, Object> getDataMap() {
@@ -129,6 +144,7 @@ public class GeneratorUtil {
 
     /**
      * 获取模板
+     *
      * @param templatePathName 模板的路径及名称
      * @return Template
      */

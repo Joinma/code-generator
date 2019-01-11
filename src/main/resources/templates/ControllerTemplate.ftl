@@ -48,7 +48,7 @@ public class ${entityName}Controller {
     }
 
     @ApiOperation(value = "删除单个${description}", notes = "根据 id 删除单个${description}信息")
-    @DeleteMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> delete${entityName}(
             @ApiParam(value = "id", required = true) @PathVariable(value = "id") String id) {
         try {
