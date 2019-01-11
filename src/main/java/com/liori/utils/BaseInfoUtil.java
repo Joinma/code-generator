@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class BaseInfoUtil {
 
-    public static String SERVICE_TEMP_PATH_NAME = "test.ftl";
+    public static String SERVICE_TEMP_PATH_NAME = "ServiceTemplate.ftl";
+
+    public static String SERVICE_IMPL_TEMP_PATH_NAME = "ServiceImplTemplate.ftl";
 
     public static String AUTHOR;
 
@@ -15,6 +17,8 @@ public class BaseInfoUtil {
     public static String ENTITY_NAME;
 
     public static String PATH;
+
+    public static String DESCRIPTION;
 
     @Value("${generator.author}")
     public void setAuthor(String author) {
@@ -34,6 +38,11 @@ public class BaseInfoUtil {
     @Value("${generator.path}")
     public void setPath(String path) {
         PATH = path;
+    }
+
+    @Value("${generator.description}")
+    public void setDescription(String description) {
+        DESCRIPTION = description;
     }
 
 }

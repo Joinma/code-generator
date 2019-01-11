@@ -3,7 +3,10 @@ generator:
   author: liori
   # 版本号
   version: 0.1
-  # 实体类名称，生成的 Service 名称为 [entityName]Service。生成的 Controller 名称为 [entityName]Controller。
-  entityName: consumecategory
+  # 实体类名称，请使用单数。生成的 Service 名称为 [entityName]Service。生成的 Controller 名称为 [entityName]Controller。
+  entityName: ConsumeCategory
+  # 关于实体类的描述
+  description: 消费分类
   # 生成的文件的存放路径
-  path: F:\\
+  path: E:\\testtt
+

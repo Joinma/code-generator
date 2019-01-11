@@ -17,30 +17,30 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-@Api(value = "用户controller", tags = {"用户接口"})
+@Api(value = "${description}controller", tags = {"${description}接口"})
 @RestController
-@RequestMapping(value = "/api/users")
+@RequestMapping(value = "/api/${entityNamePlural}")
 public class UserController {
 
-    private final static Logger LOG = LoggerFactory.getLogger(UserController.class);
+    private final static Logger LOG = LoggerFactory.getLogger(${entityName}Controller.class);
 
     @Autowired
-    private UserService userService;
+    private ${entityName}Service ${entityNameLowerCase}Service;
 
-    @ApiOperation(value = "用户登录", notes = "用户登录")
-    @GetMapping(value = "/login", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> login(
-            @ApiParam(name = "code", required = true) @RequestParam(name = "code", defaultValue = "") String code) {
+    @ApiOperation(value = "新增${description}", notes = "添加一个${description}")
+    @PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<?> save${entityName}(
+            @ApiParam(name = "${description}信息", required = true) @RequestBody ${entityName} ${entityNameLowerCase}) {
         try {
-            final User user = userService.login(code);
-            return MessageUtil.success(user, HttpStatus.OK);
+            int result = userService.save${entityName}(${entityNameLowerCase});
+            return MessageUtil.success(result, HttpStatus.OK);
         } catch (Throwable throwable) {
-            LOG.error(MessageEnum.FAIL_TO_LOGIN.getMessage(), throwable);
-            return MessageUtil.error(MessageEnum.FAIL_TO_LOGIN, throwable);
+            LOG.error(MessageEnum.FAIL_TO_CREATE.getMessage(), throwable);
+            return MessageUtil.error(MessageEnum.FAIL_TO_CREATE, throwable);
         }
     }
 
-    @ApiOperation(value = "用户更新", notes = "更新用户信息")
+    @ApiOperation(value = "${description}更新", notes = "更新${description}信息")
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> updateUser(
             @ApiParam(value = "用户id", required = true) @PathVariable(value = "id") Long id,
@@ -55,7 +55,7 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "获取单个用户", notes = "根据id获取用户信息")
+    @ApiOperation(value = "获取单个${description}", notes = "根据 id 获取${description}信息")
     @GetMapping(value = "/query/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getSingleUser(@PathVariable(value = "id") Long id) {
         try {
@@ -67,12 +67,11 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "根据参数分页获取用户", notes = "根据参数分页获取用户信息")
+    @ApiOperation(value = "根据参数分页获取${description}", notes = "根据参数分页获取${description}信息")
     @GetMapping(value = "/query", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getUsers(
             @ApiParam(value = "页码", defaultValue = "1") @RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
-            @ApiParam(value = "每页加载量", defaultValue = "10") @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
-            @ApiParam(value = "昵称") @RequestParam(value = "nickName", required = false) String nickName) {
+            @ApiParam(value = "每页加载量", defaultValue = "10") @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize) {
         try {
             User user = new User();
             user.setNickName(nickName);
@@ -81,19 +80,6 @@ public class UserController {
         } catch (Throwable throwable) {
             LOG.error(MessageEnum.FAIL_TO_QUERY.getMessage(), throwable);
             return MessageUtil.error(MessageEnum.FAIL_TO_QUERY, throwable);
-        }
-    }
-
-    @ApiOperation(value = "用户新增", notes = "添加一个用户")
-    @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> addUser(
-            @ApiParam(name = "用户信息", required = true) @RequestBody User user) {
-        try {
-            int result = userService.addUser(user);
-            return MessageUtil.success(result, HttpStatus.OK);
-        } catch (Throwable throwable) {
-            LOG.error(MessageEnum.FAIL_TO_CREATE.getMessage(), throwable);
-            return MessageUtil.error(MessageEnum.FAIL_TO_CREATE, throwable);
         }
     }
 }
