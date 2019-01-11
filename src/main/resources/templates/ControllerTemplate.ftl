@@ -40,10 +40,10 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "${description}更新", notes = "更新${description}信息")
+    @ApiOperation(value = "更新${description}", notes = "更新${description}信息")
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> updateUser(
-            @ApiParam(value = "用户id", required = true) @PathVariable(value = "id") Long id,
+    public ResponseEntity<?> update${entityName}(
+            @ApiParam(value = "${description}id", required = true) @PathVariable(value = "id") Long id,
             @ApiParam(name = "用户信息", required = true) @RequestBody User user) {
         try {
             user.setId(id);
