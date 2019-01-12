@@ -8,6 +8,7 @@ generator:
   # 关于实体类的描述
   description: 消费分类
   # 生成的文件的存放路径，最后不加 \ 或 /
-  path: E:\project\planday-be1\src\main\java\com\liori
+  path: F:\IDEA\planday-be1\src\main\java\com\liori
+#  path: E:\project\planday-be1\src\main\java\com\liori
 
 

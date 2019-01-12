@@ -9,8 +9,8 @@ public class CodeGeneratorApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CodeGeneratorApplication.class, args);
-
-        GeneratorUtil.testGetKey();
+        // Freemark 生成文件
+        GeneratorUtil.generate();
     }
 }
 

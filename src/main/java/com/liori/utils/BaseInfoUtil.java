@@ -3,47 +3,55 @@ package com.liori.utils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+/**
+ * <p><b>基础信息工具类</b></p>
+ * <p>freemark 模板文件的位置名称</p>
+ * <p>从 yml 配置文件中获取信息，给 freemark 生成文件时用</p>
+ *
+ * @author liori
+ * @since 0.0.1
+ */
 @Component
 public class BaseInfoUtil {
 
-    public static String SERVICE_TEMP_PATH_NAME = "ServiceTemplate.ftl";
+    protected static final String SERVICE_TEMP_PATH_NAME = "ServiceTemplate.ftl";
 
-    public static String SERVICE_IMPL_TEMP_PATH_NAME = "ServiceImplTemplate.ftl";
+    protected static final String SERVICE_IMPL_TEMP_PATH_NAME = "ServiceImplTemplate.ftl";
 
-    public static String CONTROLLER_TEMP_PATH_NAME = "ControllerTemplate.ftl";
+    protected static final String CONTROLLER_TEMP_PATH_NAME = "ControllerTemplate.ftl";
 
-    public static String AUTHOR;
+    protected static String AUTHOR;
 
-    public static String VERSION;
+    protected static String VERSION;
 
-    public static String ENTITY_NAME;
+    protected static String ENTITY_NAME;
 
-    public static String PATH;
+    protected static String PATH;
 
-    public static String DESCRIPTION;
+    protected static String DESCRIPTION;
 
     @Value("${generator.author}")
-    public void setAuthor(String author) {
+    protected void setAuthor(String author) {
         AUTHOR = author;
     }
 
     @Value("${generator.version}")
-    public void setVersion(String version) {
+    protected void setVersion(String version) {
         VERSION = version;
     }
 
     @Value("${generator.entityName}")
-    public void setEntityName(String entityName) {
-        ENTITY_NAME = entityName;
+    protected void setEntityName(String entityName) {
+        ENTITY_NAME = entityName.trim();
     }
 
     @Value("${generator.path}")
-    public void setPath(String path) {
+    protected void setPath(String path) {
         PATH = path;
     }
 
     @Value("${generator.description}")
-    public void setDescription(String description) {
+    protected void setDescription(String description) {
         DESCRIPTION = description;
     }
 

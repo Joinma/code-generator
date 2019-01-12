@@ -17,9 +17,9 @@ import java.util.Map;
 @Component
 public class GeneratorUtil {
 
-    public static void testGetKey() {
-        verifyBaseInfo();
 
+    public static void generate() {
+        verifyBaseInfo();
         try {
             generateService();
             generateServiceImpl();
@@ -45,8 +45,12 @@ public class GeneratorUtil {
             throw new RuntimeException("请输入 generator.entityName");
         }
 
+        if (StringUtils.isEmpty(BaseInfoUtil.DESCRIPTION)) {
+            throw new RuntimeException("请输入 generator.description");
+        }
+
         if (StringUtils.isEmpty(BaseInfoUtil.PATH)) {
-            throw new RuntimeException("请输入 path");
+            throw new RuntimeException("请输入 generator.path");
         }
     }
 
@@ -57,11 +61,10 @@ public class GeneratorUtil {
      * @throws TemplateException
      */
     private static void generateService() throws IOException, TemplateException {
-        String fileName = BaseInfoUtil.ENTITY_NAME.trim() + "Service.java";
-        String path = BaseInfoUtil.PATH + "\\service\\" + BaseInfoUtil.ENTITY_NAME.trim();
-        System.out.println("service path: " + path);
+        String fileName = BaseInfoUtil.ENTITY_NAME + "Service.java";
+        String path = BaseInfoUtil.PATH + "\\service\\" + BaseInfoUtil.ENTITY_NAME;
         createTemplateFile(fileName, path, BaseInfoUtil.SERVICE_TEMP_PATH_NAME);
-        System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^" + fileName + " 文件创建成功 !");
+        System.out.println(fileName + " 文件创建成功 !");
     }
 
     /**
@@ -71,10 +74,10 @@ public class GeneratorUtil {
      * @throws TemplateException
      */
     private static void generateServiceImpl() throws IOException, TemplateException {
-        String fileName = BaseInfoUtil.ENTITY_NAME.trim() + "ServiceImpl.java";
+        String fileName = BaseInfoUtil.ENTITY_NAME + "ServiceImpl.java";
         String path = BaseInfoUtil.PATH + "\\" + "service\\impl";
         createTemplateFile(fileName, path, BaseInfoUtil.SERVICE_IMPL_TEMP_PATH_NAME);
-        System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^" + fileName + " 文件创建成功 !");
+        System.out.println(fileName + " 文件创建成功 !");
     }
 
     /**
@@ -85,10 +88,9 @@ public class GeneratorUtil {
      */
     private static void generateController() throws IOException, TemplateException {
         String fileName = BaseInfoUtil.ENTITY_NAME.trim() + "Controller.java";
-        String path = BaseInfoUtil.PATH + "\\" + "controller\\" + BaseInfoUtil.ENTITY_NAME.trim();
-        System.out.println("controller path: " + path);
+        String path = BaseInfoUtil.PATH + "\\" + "controller\\" + BaseInfoUtil.ENTITY_NAME;
         createTemplateFile(fileName, path, BaseInfoUtil.CONTROLLER_TEMP_PATH_NAME);
-        System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^" + fileName + " 文件创建成功 !");
+        System.out.println(fileName + " 文件创建成功 !");
     }
 
     /**
@@ -100,19 +102,22 @@ public class GeneratorUtil {
     private static void createTemplateFile(String fileName, String path, String serviceImplTempPathName) throws TemplateException, IOException {
         File file = new File(path);
         if (!file.exists()) {
-            System.out.println("文件不存在，创建");
-            boolean mkdir = file.mkdirs();
-            if (mkdir) {
-                System.out.println("创建成功");
-            } else {
-                System.out.println("创建失败");
+            System.out.println(path + "不存在，创建");
+            boolean isSuccess = file.mkdirs();
+            if (!isSuccess) {
+                System.out.println("目录创建失败");
             }
         }
 
+        if (!path.endsWith("\\") || path.endsWith("/")) {
+            path = path + "\\";
+        }
+        File docFile = new File(path + fileName);
+        FileOutputStream fileOutputStream = new FileOutputStream(docFile);
+        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream, "UTF-8");
+        Writer out = new BufferedWriter(outputStreamWriter);
         Map<String, Object> dataMap = getDataMap();
         Template temp = getTemplate(serviceImplTempPathName);
-        File docFile = new File(path + "\\" + fileName);
-        Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(docFile)));
         temp.process(dataMap, out);
     }
 
