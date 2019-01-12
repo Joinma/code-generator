@@ -133,7 +133,7 @@ public class GeneratorUtil {
         dataMap.put("entityName", BaseInfoUtil.ENTITY_NAME.trim());
         String entityNamePlural = SingularPluralConversionUtil.changeSinglarToPlural(BaseInfoUtil.ENTITY_NAME.trim());
         dataMap.put("entityNamePlural", entityNamePlural);
-        String entityNameCamelCase = CamelCaseUtil.changeUnderlineToCamelCase(BaseInfoUtil.ENTITY_NAME.trim());
+        String entityNameCamelCase = CamelCaseUtil.changeUnderlineToCamelCaseFirstLowerCase(BaseInfoUtil.ENTITY_NAME.trim());
         dataMap.put("entityNameCamelCase", entityNameCamelCase);
         String entityNameCamelCasePlural = SingularPluralConversionUtil.changeSinglarToPlural(entityNameCamelCase);
         dataMap.put("entityNameCamelCasePlural", entityNameCamelCasePlural);
