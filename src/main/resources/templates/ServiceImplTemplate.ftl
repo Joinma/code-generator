@@ -11,6 +11,7 @@ import com.liori.model.${entityNameLowerCase}.${entityName}Example;
 import com.liori.service.${entityNameLowerCase}.${entityName}Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -37,6 +38,9 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
         ${entityNameCamelCase}.setCreateTime(currentTimeMillis);
         ${entityNameCamelCase}.setUpdateTime(currentTimeMillis);
         ${entityNameCamelCase}.setEnabled(Constants.ENABLED);
+        if (ObjectUtils.isEmpty(${entityNameCamelCase}.getSequence())) {
+            ${entityNameCamelCase}.setSequence(99);
+        }
         ${entityNameCamelCase}Mapper.insertSelective(${entityNameCamelCase});
         return id;
     }
