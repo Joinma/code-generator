@@ -1,8 +1,8 @@
-package com.liori.service.user.impl;
+package com.liori.service.${entityNameLowerCase}.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.liori.common.constants.Constants;
+import com.liori.common.constants.CustomizeConstants;
 import com.liori.common.exceptions.CustomizeServiceException;
 import com.liori.common.utils.uuid.UUIDUtil;
 import com.liori.mapper.${entityNameLowerCase}.${entityName}Mapper;
@@ -11,6 +11,7 @@ import com.liori.model.${entityNameLowerCase}.${entityName}Example;
 import com.liori.service.${entityNameLowerCase}.${entityName}Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
@@ -37,11 +38,14 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
         Long currentTimeMillis = System.currentTimeMillis();
         ${entityNameCamelCase}.setCreateTime(currentTimeMillis);
         ${entityNameCamelCase}.setUpdateTime(currentTimeMillis);
-        ${entityNameCamelCase}.setEnabled(Constants.ENABLED);
+        ${entityNameCamelCase}.setEnabled(CustomizeConstants.ENABLED);
         if (ObjectUtils.isEmpty(${entityNameCamelCase}.getSequence())) {
             ${entityNameCamelCase}.setSequence(99);
         }
-        ${entityNameCamelCase}Mapper.insertSelective(${entityNameCamelCase});
+        int insertRecordNum = ${entityNameCamelCase}Mapper.insertSelective(${entityNameCamelCase});
+        if (insertRecordNum == 0) {
+            throw new CustomizeServiceException("新增失败");
+        }
         return id;
     }
 
@@ -57,22 +61,41 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     }
 
     @Override
-    public String update${entityName}(${entityName} ${entityNameCamelCase}) {
-        String id = ${entityNameCamelCase}.getId();
-        if (StringUtils.isEmpty(id)) {
-            throw new CustomizeServiceException("更新方法必须传入id");
-        }
-        ${entityNameCamelCase}.setUpdateTime(System.currentTimeMillis());
-        ${entityNameCamelCase}Mapper.updateByPrimaryKey(${entityNameCamelCase});
-        return id;
-    }
-
-    @Override
     public PageInfo<${entityName}> select${entityNamePlural}ByExample(${entityName} ${entityNameCamelCase}, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
 
         ${entityName}Example ${entityNameCamelCase}Example = new ${entityName}Example();
         List<${entityName}> ${entityNameCamelCasePlural} = ${entityNameCamelCase}Mapper.selectByExample(${entityNameCamelCase}Example);
         return new PageInfo<>(${entityNameCamelCasePlural});
+    }
+
+    @Override
+    @Transactional(rollbackFor = {Exception.class})
+    public String update${entityName}(${entityName} ${entityNameCamelCase}) {
+        String id = ${entityNameCamelCase}.getId();
+        if (StringUtils.isEmpty(id) || "undefined".equals(id)) {
+            throw new CustomizeServiceException("请传入合法的 id");
+        }
+        ${entityNameCamelCase}.setUpdateTime(System.currentTimeMillis());
+        int updateRecordNum = ${entityNameCamelCase}Mapper.updateByPrimaryKey(${entityNameCamelCase});
+        if (updateRecordNum == 0) {
+            throw new CustomizeServiceException("更新失败");
+        }
+        return id;
+    }
+
+    @Override
+    @Transactional(rollbackFor = {Exception.class})
+    public String update${entityName}Selective(${entityName} ${entityNameCamelCase}) {
+        String id = ${entityNameCamelCase}.getId();
+        if (StringUtils.isEmpty(id) || CustomizeConstants.UNDEFINED.equals(id)) {
+            throw new CustomizeServiceException("请传入合法的 id");
+        }
+        ${entityNameCamelCase}.setUpdateTime(System.currentTimeMillis());
+        int updateRecordNum = ${entityNameCamelCase}Mapper.updateByPrimaryKeySelective(${entityNameCamelCase});
+        if (updateRecordNum == 0) {
+            throw new CustomizeServiceException("更新失败");
+        }
+        return id;
     }
 }

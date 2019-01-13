@@ -62,7 +62,7 @@ public class GeneratorUtil {
      */
     private static void generateService() throws IOException, TemplateException {
         String fileName = BaseInfoUtil.ENTITY_NAME + "Service.java";
-        String path = BaseInfoUtil.PATH + "\\service\\" + BaseInfoUtil.ENTITY_NAME;
+        String path = BaseInfoUtil.PATH + "\\service\\" + BaseInfoUtil.ENTITY_NAME.toLowerCase();
         createTemplateFile(fileName, path, BaseInfoUtil.SERVICE_TEMP_PATH_NAME);
         System.out.println(fileName + " 文件创建成功 !");
     }
@@ -75,7 +75,7 @@ public class GeneratorUtil {
      */
     private static void generateServiceImpl() throws IOException, TemplateException {
         String fileName = BaseInfoUtil.ENTITY_NAME + "ServiceImpl.java";
-        String path = BaseInfoUtil.PATH + "\\" + "service\\impl";
+        String path = BaseInfoUtil.PATH + "\\" + "service\\" + BaseInfoUtil.ENTITY_NAME.toLowerCase() + "\\impl";
         createTemplateFile(fileName, path, BaseInfoUtil.SERVICE_IMPL_TEMP_PATH_NAME);
         System.out.println(fileName + " 文件创建成功 !");
     }
@@ -88,7 +88,7 @@ public class GeneratorUtil {
      */
     private static void generateController() throws IOException, TemplateException {
         String fileName = BaseInfoUtil.ENTITY_NAME.trim() + "Controller.java";
-        String path = BaseInfoUtil.PATH + "\\" + "controller\\" + BaseInfoUtil.ENTITY_NAME;
+        String path = BaseInfoUtil.PATH + "\\" + "controller\\" + BaseInfoUtil.ENTITY_NAME.toLowerCase();
         createTemplateFile(fileName, path, BaseInfoUtil.CONTROLLER_TEMP_PATH_NAME);
         System.out.println(fileName + " 文件创建成功 !");
     }
