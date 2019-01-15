@@ -1,8 +1,8 @@
 database:
   host: localhost
   port: 3306
-  username: username
-  password: username
+  username: ENC(LFT4fjlw+OxrW81pTiNF/Q==)
+  password: ENC(2xtWR4fQWC4zV+OPjZgkNGD0GNr+ayXh)
   # 数据库名
   catalog: planday
   # 实体对应的表名
@@ -23,5 +23,10 @@ generator:
   #  path: E:\project\planday-be1\src\main\java\com\liori
   # 是否生成实体类 0：否 1：是
   generateModelAndMapper: 1
+
+# jasypt加密的密匙
+jasypt:
+  encryptor:
+    password: BFAF629A2A135C320CDF682CF875DC11
 
 
