@@ -4,11 +4,11 @@ generator:
   # 版本号
   version: 0.1
   # 实体类名称，请使用单数且驼峰。生成的 Service 名称为 [entityName]Service。生成的 Controller 名称为 [entityName]Controller。
-  entityName: ConsumeCategory
+  entityName: ConsumeDetail
   # 关于实体类的描述
-  description: 消费分类
+  description: 消费详情
   # 生成的文件的存放路径，最后不加 \ 或 /
-  path: F:\IDEA\planday-be1\src\main\java\com\liori
+  path: F:\IDEA\planday-be\src\main\java\com\liori
 #  path: E:\project\planday-be1\src\main\java\com\liori
 
 

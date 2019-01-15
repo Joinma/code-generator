@@ -1,4 +1,4 @@
-package com.liori.controller.user;
+package com.liori.controller.${entityNameLowerCase};
 
 import com.github.pagehelper.PageInfo;
 import com.liori.common.message.MessageEnum;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
  * @author liori
  * @since 0.1
  */
-@Api(value = "${description}controller", tags = {"${description}接口"})
+@Api(value = "${description}Controller", tags = {"${description}接口"})
 @RestController
 @RequestMapping(value = "/api/${entityNameLowerCasePlural}")
 public class ${entityName}Controller {
@@ -60,22 +60,10 @@ public class ${entityName}Controller {
         }
     }
 
-    @ApiOperation(value = "更新${description}", notes = "更新${description}信息")
-    @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> update${entityName}(
-          @ApiParam(name = "${description}信息", required = true) @RequestBody ${entityName} ${entityNameCamelCase}) {
-        try {
-            final String updateId = ${entityNameCamelCase}Service.update${entityName}(${entityNameCamelCase});
-            return MessageUtil.success(updateId, HttpStatus.OK);
-        } catch (Throwable throwable) {
-            LOG.error(MessageEnum.FAIL_TO_UPDATE.getMessage(), throwable);
-            return MessageUtil.error(MessageEnum.FAIL_TO_UPDATE, throwable);
-        }
-    }
-
     @ApiOperation(value = "获取单个${description}", notes = "根据 id 获取${description}信息")
     @GetMapping(value = "/query/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> getSingle${entityName}(@PathVariable(value = "id") String id) {
+    public ResponseEntity<?> getSingle${entityName}(
+            @ApiParam(value = "id", required = true) @PathVariable(value = "id") String id) {
         try {
             final ${entityName} ${entityNameCamelCase} = ${entityNameCamelCase}Service.select${entityName}(id);
             return MessageUtil.success(${entityNameCamelCase}, HttpStatus.OK);
@@ -87,7 +75,7 @@ public class ${entityName}Controller {
 
     @ApiOperation(value = "根据参数分页获取${description}", notes = "根据参数分页获取${description}信息")
     @GetMapping(value = "/query", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> getUsers(
+    public ResponseEntity<?> get${entityNameCamelCasePlural}(
             @ApiParam(value = "页码", defaultValue = "1") @RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
             @ApiParam(value = "每页加载量", defaultValue = "10") @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize) {
         try {
@@ -97,6 +85,19 @@ public class ${entityName}Controller {
         } catch (Throwable throwable) {
             LOG.error(MessageEnum.FAIL_TO_QUERY.getMessage(), throwable);
             return MessageUtil.error(MessageEnum.FAIL_TO_QUERY, throwable);
+        }
+    }
+
+    @ApiOperation(value = "更新${description}", notes = "更新${description}信息")
+    @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<?> update${entityName}(
+          @ApiParam(name = "${description}信息", required = true) @RequestBody ${entityName} ${entityNameCamelCase}) {
+        try {
+            final String updateId = ${entityNameCamelCase}Service.update${entityName}Selective(${entityNameCamelCase});
+            return MessageUtil.success(updateId, HttpStatus.OK);
+        } catch (Throwable throwable) {
+            LOG.error(MessageEnum.FAIL_TO_UPDATE.getMessage(), throwable);
+            return MessageUtil.error(MessageEnum.FAIL_TO_UPDATE, throwable);
         }
     }
 }
