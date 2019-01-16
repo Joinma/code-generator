@@ -1,4 +1,4 @@
-package com.liori.utils;
+package com.liori.utils.word;
 
 import java.util.*;
 import java.util.regex.*;
@@ -38,7 +38,7 @@ public class SingularPluralConversionUtil {
     private void initialize() {
         plural("$", "s");
         plural("s$", "s");
-        plural("(ax|test)is$", "$1es");
+        plural("(ax|getTableColumns)is$", "$1es");
         plural("(octop|vir)us$", "$1i");
         plural("(alias|status)$", "$1es");
         plural("(bu)s$", "$1es");
@@ -72,7 +72,7 @@ public class SingularPluralConversionUtil {
         singular("(bus)es$", "$1");
         singular("(o)es$", "$1");
         singular("(shoe)s$", "$1");
-        singular("(cris|ax|test)es$", "$1is");
+        singular("(cris|ax|getTableColumns)es$", "$1is");
         singular("([octop|vir])i$", "$1us");
         singular("(alias|status)es$", "$1");
         singular("^(ox)es", "$1");

@@ -1,4 +1,4 @@
-package com.liori.utils;
+package com.liori.utils.word;
 
 public class CamelCaseUtil {
 

@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.liori</groupId>
     <artifactId>code-generator</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>code-generator</name>
     <description>code generator</description>
 
@@ -34,6 +34,11 @@
             <artifactId>spring-boot-autoconfigure</artifactId>
             <version>2.0.6.RELEASE</version>
         </dependency>
+        <!--JDBC-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -44,5 +49,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

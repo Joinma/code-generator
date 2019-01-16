@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
  * <p>${description}的接口类</p>
  * <b>created on ${createTime}</b>
  *
- * @author liori
- * @since 0.1
+ * @author ${author}
+ * @since ${version}
  */
 @Service
 public interface ${entityName}Service {

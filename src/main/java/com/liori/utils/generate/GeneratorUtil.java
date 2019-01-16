@@ -1,5 +1,9 @@
-package com.liori.utils;
+package com.liori.utils.generate;
 
+import com.liori.utils.baseinfo.BaseInfoUtil;
+import com.liori.utils.database.DatabaseUtil;
+import com.liori.utils.word.CamelCaseUtil;
+import com.liori.utils.word.SingularPluralConversionUtil;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -24,6 +28,13 @@ public class GeneratorUtil {
             generateService();
             generateServiceImpl();
             generateController();
+            if ("1".equals(BaseInfoUtil.GENERATE_MODEL_AND_MAPPER)) {
+                System.out.println("------------生成 Model、Mapper------------");
+                generateModel();
+                generateMapper();
+            } else {
+                System.out.println("------------不生成 Model、Mapper------------");
+            }
         } catch (IOException | TemplateException e) {
             e.printStackTrace();
         }
@@ -51,6 +62,10 @@ public class GeneratorUtil {
 
         if (StringUtils.isEmpty(BaseInfoUtil.PATH)) {
             throw new RuntimeException("请输入 generator.path");
+        }
+
+        if (StringUtils.isEmpty(BaseInfoUtil.GENERATE_MODEL_AND_MAPPER)) {
+            throw new RuntimeException("请输入 generator.generateModelAndMapper");
         }
     }
 
@@ -90,6 +105,32 @@ public class GeneratorUtil {
         String fileName = BaseInfoUtil.ENTITY_NAME.trim() + "Controller.java";
         String path = BaseInfoUtil.PATH + "\\" + "controller\\" + BaseInfoUtil.ENTITY_NAME.toLowerCase();
         createTemplateFile(fileName, path, BaseInfoUtil.CONTROLLER_TEMP_PATH_NAME);
+        System.out.println(fileName + " 文件创建成功 !");
+    }
+
+    /**
+     * 创建 Model 文件
+     *
+     * @throws IOException
+     * @throws TemplateException
+     */
+    private static void generateModel() throws IOException, TemplateException {
+        String fileName = BaseInfoUtil.ENTITY_NAME.trim() + ".java";
+        String path = BaseInfoUtil.PATH + "\\" + "model\\" + BaseInfoUtil.ENTITY_NAME.toLowerCase();
+        createTemplateFile(fileName, path, BaseInfoUtil.MODEL_TEMP_PATH_NAME);
+        System.out.println(fileName + " 文件创建成功 !");
+    }
+
+    /**
+     * 创建 Mapper 文件
+     *
+     * @throws IOException
+     * @throws TemplateException
+     */
+    private static void generateMapper() throws IOException, TemplateException {
+        String fileName = BaseInfoUtil.ENTITY_NAME.trim() + "Mapper.java";
+        String path = BaseInfoUtil.PATH + "\\" + "mapper\\" + BaseInfoUtil.ENTITY_NAME.toLowerCase();
+        createTemplateFile(fileName, path, BaseInfoUtil.MAPPER_TEMP_PATH_NAME);
         System.out.println(fileName + " 文件创建成功 !");
     }
 
@@ -138,11 +179,14 @@ public class GeneratorUtil {
         String entityNameCamelCasePlural = SingularPluralConversionUtil.changeSinglarToPlural(entityNameCamelCase);
         dataMap.put("entityNameCamelCasePlural", entityNameCamelCasePlural);
         dataMap.put("author", BaseInfoUtil.AUTHOR);
-        dataMap.put("vsrsion", BaseInfoUtil.VERSION);
+        dataMap.put("version", BaseInfoUtil.VERSION);
         dataMap.put("description", BaseInfoUtil.DESCRIPTION);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateTime = simpleDateFormat.format(new Date());
         dataMap.put("createTime", dateTime);
+        if ("1".equals(BaseInfoUtil.GENERATE_MODEL_AND_MAPPER)) {
+            dataMap.put("tableColumns", DatabaseUtil.getTableColumns());
+        }
 
         return dataMap;
     }
@@ -167,4 +211,5 @@ public class GeneratorUtil {
         }
         return temp;
     }
+
 }

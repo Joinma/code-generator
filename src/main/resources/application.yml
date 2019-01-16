@@ -1,14 +1,27 @@
+database:
+  host: localhost
+  port: 3306
+  username: 1212
+  password: 1212
+  # 数据库名
+  catalog: planday
+  # 实体对应的表名
+  tableName: t_user
+
 generator:
   # 作者名称
   author: liori
   # 版本号
   version: 0.1
-  # 实体类名称，请使用单数且驼峰。生成的 Service 名称为 [entityName]Service。生成的 Controller 名称为 [entityName]Controller。
-  entityName: ConsumeDetail
+  # 实体类名称，请使用单数且驼峰。
+  # 生成的 Service 名称为 [entityName]Service。生成的 Controller 名称为 [entityName]Controller。
+  entityName: User
   # 关于实体类的描述
   description: 消费详情
   # 生成的文件的存放路径，最后不加 \ 或 /
-  path: F:\IDEA\planday-be\src\main\java\com\liori
-#  path: E:\project\planday-be1\src\main\java\com\liori
+  path: F:\IDEA\planday-be1\src\main\java\com\liori
+  #  path: E:\project\planday-be1\src\main\java\com\liori
+  # 是否生成实体类 0：否 1：是
+  generateModelAndMapper: 1
 
 

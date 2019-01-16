@@ -1,8 +1,9 @@
 package com.liori;
 
-import com.liori.utils.GeneratorUtil;
+import com.liori.utils.generate.GeneratorUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 
 @SpringBootApplication
 public class CodeGeneratorApplication {
