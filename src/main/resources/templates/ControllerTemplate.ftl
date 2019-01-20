@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.*;
  * <p>${description}的控制器</p>
  * <b>created on ${createTime}</b>
  *
- * @author liori
- * @since 0.1
+ * @author ${author}
+ * @since ${version}
  */
 @Api(value = "${description}Controller", tags = {"${description}接口"})
 @RestController

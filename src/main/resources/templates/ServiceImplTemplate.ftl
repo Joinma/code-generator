@@ -22,8 +22,8 @@ import java.util.List;
  * <p>${description}的接口实现类</p>
  * <b>created on ${createTime}</b>
  *
- * @author liori
- * @since 0.1
+ * @author ${author}
+ * @since ${version}
  */
 @Service
 public class ${entityName}ServiceImpl implements ${entityName}Service {
