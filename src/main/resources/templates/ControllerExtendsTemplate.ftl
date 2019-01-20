@@ -39,8 +39,8 @@ public class ${entityName}Controller {
     public ResponseEntity<?> save${entityName}(
             @ApiParam(name = "${description}信息", required = true) @RequestBody ${entityName} ${entityNameCamelCase}) {
         try {
-            final String insertId = ${entityNameCamelCase}Service.saveEntitySelective(${entityNameCamelCase});
-            return MessageUtil.success(insertId, HttpStatus.OK);
+            final String inserted${entityName} = ${entityNameCamelCase}Service.saveEntitySelective(${entityNameCamelCase});
+            return MessageUtil.success(inserted${entityName}, HttpStatus.OK);
         } catch (Throwable throwable) {
             LOG.error(MessageEnum.FAIL_TO_CREATE.getMessage(), throwable);
             return MessageUtil.error(MessageEnum.FAIL_TO_CREATE, throwable);
@@ -52,8 +52,8 @@ public class ${entityName}Controller {
     public ResponseEntity<?> delete${entityName}(
             @ApiParam(value = "id", required = true) @PathVariable(value = "id") String id) {
         try {
-            final String deleteId = ${entityNameCamelCase}Service.deleteEntity(id);
-            return MessageUtil.success(deleteId, HttpStatus.OK);
+            final String deletedId = ${entityNameCamelCase}Service.deleteEntity(id);
+            return MessageUtil.success(deletedId, HttpStatus.OK);
         } catch (Throwable throwable) {
             LOG.error(MessageEnum.FAIL_TO_UPDATE.getMessage(), throwable);
             return MessageUtil.error(MessageEnum.FAIL_TO_UPDATE, throwable);
