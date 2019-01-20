@@ -24,6 +24,6 @@ public interface ${entityName}Service extends BaseService<${entityName}, ${entit
      * @param pageSize 每页加载量
      * @return PageInfo<${entityName}>
      */
-    PageInfo select${entityNamePlural}ByExample(${entityName} ${entityNameCamelCase}, Integer pageNum, Integer pageSize);
+    PageInfo<${entityName}> select${entityNamePlural}ByExample(${entityName} ${entityNameCamelCase}, Integer pageNum, Integer pageSize);
 
 }
