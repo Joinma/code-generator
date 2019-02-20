@@ -39,7 +39,7 @@ public class ${entityName}Controller {
     public ResponseEntity<?> save${entityName}(
             @ApiParam(name = "${description}信息", required = true) @RequestBody ${entityName} ${entityNameCamelCase}) {
         try {
-            final ${entityName} inserted${entityName} = ${entityNameCamelCase}Service.saveEntity(${entityNameCamelCase});
+            final ${entityName} inserted${entityName} = ${entityNameCamelCase}Service.saveEntitySelective(${entityNameCamelCase});
             return MessageUtil.success(inserted${entityName}, HttpStatus.OK);
         } catch (Throwable throwable) {
             LOG.error(MessageEnum.FAIL_TO_CREATE.getMessage(), throwable);
