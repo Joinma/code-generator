@@ -1,8 +1,8 @@
 database:
   host: localhost
   port: 3306
-  username: 1212
-  password: 1212
+  username: root
+  password: root
   # 数据库名
   catalog: planday
   # 实体对应的表名
@@ -19,9 +19,9 @@ generator:
   # 关于实体类的描述
   description: 消费详情
   # 生成的文件的存放路径，最后不加 \ 或 /
-  path: F:\IDEA\planday-be1\src\main\java\com\liori
-  #  path: E:\project\planday-be1\src\main\java\com\liori
-  # 是否生成实体类 0：否 1：是
-  generateModelAndMapper: 1
+  # path: F:\IDEA\planday-be1\src\main\java\com\liori
+  path: E:\project\planday-be1\src\main\java\com\liori
+  # 生产文件类型 0：生成全部 1：生成实体类 2：生成Mapper 3：生成Service 4：生成controller
+  generateType: 0
 
 

@@ -34,8 +34,6 @@ public class BaseInfoUtil {
 
     public static String DESCRIPTION;
 
-    public static String GENERATE_MODEL_AND_MAPPER;
-
     public static String DATABASE_USERNAME;
 
     public static String DATABASE_PASSWORD;
@@ -47,6 +45,8 @@ public class BaseInfoUtil {
     public static String DATABASE_HOST;
 
     public static String DATABASE_PORT;
+
+    public static String GENERATE_TYPE;
 
 
     @Value("${generator.author}")
@@ -72,11 +72,6 @@ public class BaseInfoUtil {
     @Value("${generator.description}")
     protected void setDescription(String description) {
         DESCRIPTION = description;
-    }
-
-    @Value("${generator.generateModelAndMapper}")
-    protected void setGenerateModelAndMapper(String generateModelAndMapper) {
-        GENERATE_MODEL_AND_MAPPER = generateModelAndMapper;
     }
 
     @Value("${database.username}")
@@ -108,6 +103,11 @@ public class BaseInfoUtil {
     @Value("${database.port}")
     protected void setDatabasePort(String port) {
         DATABASE_PORT = port;
+    }
+
+    @Value("${generator.generateType}")
+    protected void setGenerateType(String generateType) {
+        GENERATE_TYPE = generateType;
     }
 
 }

@@ -21,19 +21,33 @@ import java.util.Map;
 @Component
 public class GeneratorUtil {
 
-
     public static void generate() {
         verifyBaseInfo();
         try {
-            generateService();
-            generateServiceImpl();
-            generateController();
-            if ("1".equals(BaseInfoUtil.GENERATE_MODEL_AND_MAPPER)) {
-                System.out.println("------------生成 Model、Mapper------------");
-                generateModel();
-                generateMapper();
-            } else {
-                System.out.println("------------不生成 Model、Mapper------------");
+            String generateType = BaseInfoUtil.GENERATE_TYPE;
+            switch (generateType) {
+                case "0":
+                    generateModel();
+                    generateMapper();
+                    generateService();
+                    generateServiceImpl();
+                    generateController();
+                    break;
+                case "1":
+                    generateModel();
+                    break;
+                case "2":
+                    generateMapper();
+                    break;
+                case "3":
+                    generateService();
+                    generateServiceImpl();
+                    break;
+                case "4":
+                    generateController();
+                    break;
+                default:
+                    throw new RuntimeException("未支持的类型");
             }
         } catch (IOException | TemplateException e) {
             e.printStackTrace();
@@ -64,8 +78,8 @@ public class GeneratorUtil {
             throw new RuntimeException("请输入 generator.path");
         }
 
-        if (StringUtils.isEmpty(BaseInfoUtil.GENERATE_MODEL_AND_MAPPER)) {
-            throw new RuntimeException("请输入 generator.generateModelAndMapper");
+        if (StringUtils.isEmpty(BaseInfoUtil.GENERATE_TYPE)) {
+            throw new RuntimeException("请输入 generator.generateType");
         }
     }
 
@@ -184,7 +198,7 @@ public class GeneratorUtil {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateTime = simpleDateFormat.format(new Date());
         dataMap.put("createTime", dateTime);
-        if ("1".equals(BaseInfoUtil.GENERATE_MODEL_AND_MAPPER)) {
+        if ("0".equals(BaseInfoUtil.GENERATE_TYPE) || "1".equals(BaseInfoUtil.GENERATE_TYPE)) {
             dataMap.put("tableColumns", DatabaseUtil.getTableColumns());
         }
 
